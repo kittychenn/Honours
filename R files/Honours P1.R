@@ -1,0 +1,373 @@
+install.packages("cchsflow")
+library(cchsflow)
+library(dplyr)
+
+
+#### Length of time in Canada (2001-2013)
+Ctime2001 <- rec_with_table(cchs2001_p, "SDCGRES", log = TRUE, attach_data_name = TRUE, attach_data_name = TRUE)
+Ctime2001$year <- 2001
+Ctime2003 <- rec_with_table(cchs2003_p, "SDCGRES", log = TRUE, attach_data_name = TRUE)
+Ctime2003$year <- 2003
+Ctime2005 <- rec_with_table(cchs2005_p, "SDCGRES", log = TRUE, attach_data_name = TRUE)
+Ctime2005$year <- 2005
+Ctime2007_2008 <- rec_with_table(cchs2007_2008_p, "SDCGRES", log = TRUE, attach_data_name = TRUE)
+Ctime2007_2008$year <- 2007
+Ctime2009_2010 <- rec_with_table(cchs2009_2010_p, "SDCGRES", log = TRUE, attach_data_name = TRUE)
+Ctime2009_2010$year <- 2009
+Ctime2011_2012 <- rec_with_table(cchs2011_2012_p, "SDCGRES", log = TRUE, attach_data_name = TRUE)
+Ctime2011_2012$year <- 2011
+Ctime2013_2014 <- rec_with_table(cchs2013_2014_p, "SDCGRES", log = TRUE, attach_data_name = TRUE)
+Ctime2013_2014$year <- 2013
+
+Time_in_Canada <- list(Ctime2001, Ctime2003, Ctime2005, Ctime2007_2008, Ctime2009_2010,Ctime2011_2012, Ctime2013_2014)
+
+Time_in_Canada_combined<- bind_rows(Time_in_Canada)
+
+get_label(Time_in_Canada_combined)
+labeled_Time_in_Canada_combined <- set_data_labels(Time_in_Canada_combined,variable_details,variables)
+get_label(labeled_Time_in_Canada_combined)
+
+## Immigrant Status SDCFIMM
+IS2001 <- rec_with_table(cchs2001_p, "SDCFIMM", log = TRUE  )
+IS2001$year <- 2001
+IS2003 <- rec_with_table(cchs2003_p, "SDCFIMM", log = TRUE  )
+IS2003$year <- 2003
+IS2005 <- rec_with_table(cchs2005_p, "SDCFIMM", log = TRUE  )
+IS2005$year <- 2005
+IS2007_2008 <- rec_with_table(cchs2007_2008_p, "SDCFIMM", log = TRUE  )
+IS2007_2008$year <- 2007
+IS2009_2010 <- rec_with_table(cchs2009_2010_p, "SDCFIMM", log = TRUE  )
+IS2009_2010$year <- 2009
+IS2011_2012 <- rec_with_table(cchs2011_2012_p, "SDCFIMM", log = TRUE  )
+IS2011_2012$year <- 2011
+IS2013_2014 <- rec_with_table(cchs2013_2014_p, "SDCFIMM", log = TRUE  )
+IS2013_2014$year <- 2013
+
+IS <- list(IS2001, IS2003, IS2005, IS2007_2008, IS2009_2010,IS2011_2012, IS2013_2014)
+IS_combined<- bind_rows(IS)
+
+get_label(IS_combined)
+labeled_IS_combined <- set_data_labels(IS_combined,variable_details,variables)
+get_label(labeled_IS_combined)
+
+## Percentage of time in Canada 
+pct_time2001 <- rec_with_table(cchs2001_p, c("DHHGAGE_cont","SDCGCBG", "SDCGRES","pct_time_der"), log = TRUE, attach_data_name = TRUE)
+pct_time2001$year <- 2001
+pct_time2003 <- rec_with_table(cchs2003_p, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
+pct_time2003$year <- 2003
+pct_time2005 <- rec_with_table(cchs2005_p, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
+pct_time2005$year <- 2005
+pct_time2007_2008 <- rec_with_table(cchs2007_2008_p, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
+pct_time2007_2008$year <- 2007
+pct_time2009_2010 <- rec_with_table(cchs2009_2010_p, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
+pct_time2009_2010$year <- 2009
+pct_time2011_2012 <- rec_with_table(cchs2011_2012_p, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
+pct_time2011_2012$year <- 2011
+pct_time2013_2014 <- rec_with_table(cchs2013_2014_p, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
+pct_time2013_2014$year <- 2013
+
+pct_time <- list(pct_time2001, pct_time2003, pct_time2005, pct_time2007_2008, pct_time2009_2010,pct_time2011_2012, pct_time2013_2014)
+
+pct_time <- list(pct_time2001, pct_time2003, pct_time2005, pct_time2007_2008, pct_time2009_2010,pct_time2011_2012, pct_time2013_2014) 
+pct_time_combined<- bind_rows(pct_time)
+
+get_label(pct_time_combined)
+labeled_pct_time_combined <- set_data_labels(pct_time_combined,variable_details,variables)
+get_label(labeled_pct_time_combined)
+
+#### Unhealthy habits: Binge drinking, smoking, stress, BMI, METS
+
+## Binge drinker
+Bdrinker2001 <- rec_with_table(cchs2001_p, c("ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4","ALW_2A5", "ALW_2A6", "ALW_2A7"), log = TRUE  )
+Bdrinker2001$year <- 2001
+Bdrinker2003 <- rec_with_table(cchs2003_p, c(   "ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4",   "ALW_2A5", "ALW_2A6", "ALW_2A7", "binge_drinker"), log = TRUE  )
+Bdrinker2003$year <- 2003
+Bdrinker2005 <- rec_with_table(cchs2005_p, c(   "ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4",   "ALW_2A5", "ALW_2A6", "ALW_2A7", "binge_drinker"), log = TRUE  )
+Bdrinker2005$year <- 2005
+Bdrinker2007_2008 <- rec_with_table(cchs2007_2008_p, c(   "ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4",   "ALW_2A5", "ALW_2A6", "ALW_2A7", "binge_drinker"), log = TRUE  )
+Bdrinker2007_2008$year <- 2007
+Bdrinker2009_2010 <- rec_with_table(cchs2009_2010_p, c(   "ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4",   "ALW_2A5", "ALW_2A6", "ALW_2A7", "binge_drinker"), log = TRUE  )
+Bdrinker2009_2010$year <- 2009
+Bdrinker2011_2012 <- rec_with_table(cchs2011_2012_p, c(   "ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4",   "ALW_2A5", "ALW_2A6", "ALW_2A7", "binge_drinker"), log = TRUE  )
+Bdrinker2011_2012$year <- 2011
+Bdrinker2013_2014 <- rec_with_table(cchs2013_2014_p, c(   "ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4",   "ALW_2A5", "ALW_2A6", "ALW_2A7", "binge_drinker"), log = TRUE  )
+Bdrinker2013_2014$year <- 2013
+
+Bdrinker <- list(Bdrinker2001, Bdrinker2003, Bdrinker2005, Bdrinker2007_2008, Bdrinker2009_2010,Bdrinker2011_2012, Bdrinker2013_2014)
+Bdrinker_combined <- bind_rows(Bdrinker)
+Bdrinker_combined
+
+get_label(Bdrinker_combined)
+labeled_Bdrinker_combined <- set_data_labels(Bdrinker_combined,variable_details,variables)
+get_label(labeled_Bdrinker_combined)
+
+
+## Smoker? SMKDSTY
+Smoker2001 <- rec_with_table(cchs2001_p, c("SMKDSTY", "DHHGAGE_cont", "SMK_09A_B", "SMKG09C",   "SMKG203_cont", "SMKG207_cont", "SMK_204", "SMK_05B", "SMK_208",   "SMK_05C", "SMK_01A", "SMKG01C_cont", "pack_years_der"), log = TRUE  )
+Smoker2001$year <- 2001
+Smoker2003 <- rec_with_table(cchs2003_p, c(   "SMKDSTY", "DHHGAGE_cont", "SMK_09A_B", "SMKG09C",   "SMKG203_cont", "SMKG207_cont", "SMK_204", "SMK_05B", "SMK_208",   "SMK_05C", "SMK_01A", "SMKG01C_cont", "pack_years_der" ), log = TRUE  )
+Smoker2003$year <- 2003
+Smoker2005 <- rec_with_table(cchs2005_p, c(   "SMKDSTY", "DHHGAGE_cont", "SMK_09A_B", "SMKG09C",   "SMKG203_cont", "SMKG207_cont", "SMK_204", "SMK_05B", "SMK_208",   "SMK_05C", "SMK_01A", "SMKG01C_cont", "pack_years_der" ), log = TRUE  )
+Smoker2005$year <- 2005
+Smoker2007_2008 <- rec_with_table(cchs2007_2008_p, c(   "SMKDSTY", "DHHGAGE_cont", "SMK_09A_B", "SMKG09C",   "SMKG203_cont", "SMKG207_cont", "SMK_204", "SMK_05B", "SMK_208",   "SMK_05C", "SMK_01A", "SMKG01C_cont", "pack_years_der" ), log = TRUE  )
+Smoker2007_2008$year <- 2007
+Smoker2009_2010 <- rec_with_table(cchs2009_2010_p, c(   "SMKDSTY", "DHHGAGE_cont", "SMK_09A_B", "SMKG09C",   "SMKG203_cont", "SMKG207_cont", "SMK_204", "SMK_05B", "SMK_208",   "SMK_05C", "SMK_01A", "SMKG01C_cont", "pack_years_der" ), log = TRUE  )
+Smoker2009_2010$year <- 2009
+Smoker2011_2012 <- rec_with_table(cchs2011_2012_p, c(   "SMKDSTY", "DHHGAGE_cont", "SMK_09A_B", "SMKG09C",   "SMKG203_cont", "SMKG207_cont", "SMK_204", "SMK_05B", "SMK_208",   "SMK_05C", "SMK_01A", "SMKG01C_cont", "pack_years_der" ), log = TRUE  )
+Smoker2011_2012$year <- 2011
+Smoker2013_2014 <- rec_with_table(cchs2013_2014_p, c(   "SMKDSTY", "DHHGAGE_cont", "SMK_09A_B", "SMKG09C",   "SMKG203_cont", "SMKG207_cont", "SMK_204", "SMK_05B", "SMK_208",   "SMK_05C", "SMK_01A", "SMKG01C_cont", "pack_years_der" ), log = TRUE  )
+Smoker2013_2014$year <- 2013
+
+Smoker <- list(Smoker2001, Smoker2003, Smoker2005, Smoker2007_2008, Smoker2009_2010,Smoker2011_2012, Smoker2013_2014)
+Smoker_combined <- bind_rows(Smoker)
+
+get_label(Smoker_combined)
+labeled_Smoker_combined <- set_data_labels(Smoker_combined,variable_details,variables)
+get_label(labeled_Smoker_combined)
+
+## Stress? 	GEN_07
+Stress2001 <- rec_with_table(cchs2001_p, "GEN_07", log = TRUE  )
+Stress2001$year <- 2001
+Stress2003 <- rec_with_table(cchs2003_p, "GEN_07", log = TRUE  )
+Stress2003$year <- 2003
+Stress2005 <- rec_with_table(cchs2005_p, "GEN_07", log = TRUE  )
+Stress2005$year <- 2005
+Stress2007_2008 <- rec_with_table(cchs2007_2008_p, "GEN_07", log = TRUE  )
+Stress2007_2008$year <- 2007
+Stress2009_2010 <- rec_with_table(cchs2009_2010_p, "GEN_07", log = TRUE  )
+Stress2009_2010$year <- 2009
+Stress2011_2012 <- rec_with_table(cchs2011_2012_p, "GEN_07", log = TRUE  )
+Stress2011_2012$year <- 2011
+Stress2013_2014 <- rec_with_table(cchs2013_2014_p, "GEN_07", log = TRUE  )
+Stress2013_2014$year <- 2013
+
+Stress <- list(Stress2001, Stress2003, Stress2005, Stress2007_2008, Stress2009_2010,Stress2011_2012, Stress2013_2014)
+Stress_combined <- bind_rows(Stress)
+
+get_label(Stress_combined)
+labeled_Stress_combined <- set_data_labels(Stress_combined,variable_details,variables)
+get_label(labeled_Stress_combined)
+
+## BMI? HWTGBMI
+BMI2001 <- rec_with_table(cchs2001_p, c("HWTGHTM", "HWTGWTK",
+                                        "HWTGBMI_der"), log = TRUE  )
+BMI2001$year <- 2001
+BMI2003 <- rec_with_table(cchs2003_p, c("HWTGHTM", "HWTGWTK", "HWTGBMI_der"), log = TRUE  )
+BMI2003$year <- 2003
+BMI2005 <- rec_with_table(cchs2005_p, c("HWTGHTM", "HWTGWTK", "HWTGBMI_der"), log = TRUE  )
+BMI2005$year <- 2005
+BMI2007_2008 <- rec_with_table(cchs2007_2008_p, c("HWTGHTM", "HWTGWTK", "HWTGBMI_der"), log = TRUE  )
+BMI2007_2008$year <- 2007
+BMI2009_2010 <- rec_with_table(cchs2009_2010_p, c("HWTGHTM", "HWTGWTK", "HWTGBMI_der"), log = TRUE  )
+BMI2009_2010$year <- 2009
+BMI2011_2012 <- rec_with_table(cchs2011_2012_p, c("HWTGHTM", "HWTGWTK", "HWTGBMI_der"), log = TRUE  )
+BMI2011_2012$year <- 2011
+BMI2013_2014 <- rec_with_table(cchs2013_2014_p, c("HWTGHTM", "HWTGWTK", "HWTGBMI_der"), log = TRUE  )
+BMI2013_2014$year <- 2013
+
+BMI <- list(BMI2001, BMI2003, BMI2005, BMI2007_2008, BMI2009_2010,BMI2011_2012, BMI2013_2014)
+BMI_combined <- bind_rows(BMI)
+
+get_label(BMI_combined)
+labeled_BMI_combined <- set_data_labels(BMI_combined,variable_details,variables)
+get_label(labeled_BMI_combined)
+
+## METS? PACDEE
+METS2001 <- rec_with_table(cchs2001_p, "PACDEE", log = TRUE  )
+METS2001$year <- 2001
+METS2003 <- rec_with_table(cchs2003_p, "PACDEE", log = TRUE  )
+METS2003$year <- 2003
+METS2005 <- rec_with_table(cchs2005_p, "PACDEE", log = TRUE  )
+METS2005$year <- 2005
+METS2007_2008 <- rec_with_table(cchs2007_2008_p, "PACDEE", log = TRUE  )
+METS2007_2008$year <- 2007
+METS2009_2010 <- rec_with_table(cchs2009_2010_p, "PACDEE", log = TRUE  )
+METS2009_2010$year <- 2009
+METS2011_2012 <- rec_with_table(cchs2011_2012_p, "PACDEE", log = TRUE  )
+METS2011_2012$year <- 2011
+METS2013_2014 <- rec_with_table(cchs2013_2014_p, "PACDEE", log = TRUE  )
+METS2013_2014$year <- 2013
+
+METS <- list(METS2001, METS2003, METS2005, METS2007_2008, METS2009_2010,METS2011_2012, METS2013_2014)
+METS_combined <- bind_rows(METS)
+METS_combined
+
+get_label(METS_combined)
+labeled_METS_combined <- set_data_labels(METS_combined,variable_details,variables)
+get_label(labeled_METS_combined)
+
+## F/V? FVCDTOT
+FV2001 <- rec_with_table(cchs2001_p, "FVCDTOT", log = TRUE  )
+FV2001$year <- 2001
+FV2003 <- rec_with_table(cchs2003_p, "FVCDTOT", log = TRUE  )
+FV2003$year <- 2003
+FV2005 <- rec_with_table(cchs2005_p, "FVCDTOT", log = TRUE  )
+FV2005$year <- 2005
+FV2007_2008 <- rec_with_table(cchs2007_2008_p, "FVCDTOT", log = TRUE  )
+FV2007_2008$year <- 2007
+FV2009_2010 <- rec_with_table(cchs2009_2010_p, "FVCDTOT", log = TRUE  )
+FV2009_2010$year <- 2009
+FV2011_2012 <- rec_with_table(cchs2011_2012_p, "FVCDTOT", log = TRUE  )
+FV2011_2012$year <- 2011
+FV2013_2014 <- rec_with_table(cchs2013_2014_p, "FVCDTOT", log = TRUE  )
+FV2013_2014$year <- 2013
+
+FV <- list(FV2001, FV2003, FV2005, FV2007_2008, FV2009_2010,FV2011_2012, FV2013_2014)
+FV_combined <- bind_rows(FV)
+FV_combined
+
+get_label(FV_combined)
+labeled_FV_combined <- set_data_labels(FV_combined,variable_details,variables)
+get_label(labeled_FV_combined)
+
+#### COMBINED ####
+combined <-cbind(labeled_Bdrinker_combined, labeled_BMI_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_pct_time_combined,labeled_FV_combined)
+get_label(combined)
+labeled_combined <- set_data_labels(combined,variable_details,variables)
+get_label(labeled_combined)
+
+labeled_Bdrinker_combined[,c('date_year','year')] <- NULL
+labeled_BMI_combined[,c('date_year','year')] <- NULL
+labeled_METS_combined[,c('date_year','year')] <- NULL
+labeled_Smoker_combined[,c('date_year','year')] <- NULL
+labeled_IS_combined[,c('date_year','year')] <- NULL
+labeled_Time_in_Canada_combined[,c('date_year','year')] <- NULL
+
+combined <-cbind(labeled_Bdrinker_combined, labeled_BMI_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_pct_time_combined, labeled_FV_combined)
+
+#### CDN Born
+CDN <- subset(combined,SDCFIMM== "2")
+
+#### Immigrant
+IG <- subset(combined,SDCFIMM== "1")
+
+#High stress (4,5) where n_CDN=1185 and n_IG=185
+StressCDN <- subset(CDN,GEN_07== c(4,5))
+attach(StressCDN)
+StressCDN_T <- data.frame(year,GEN_07)
+StressCDN_T%>%
+  group_by(year) %>%
+  summarise(total=sum(GEN_07),percentage=(sum(GEN_07)/1185*100))
+
+StressCDN_df<-as.data.frame.matrix(addmargins(StressCDN_T))
+StressCDN_df$Percentage <- StressCDN_df$Sum/(1185)*100
+
+StressIG <- subset (IG, GEN_07==c(5,4))
+StressIG
+attach(StressIG)
+StressIG_T <- table(year, GEN_07)
+StressIG_df<-as.data.frame.matrix(addmargins(StressIG_T))
+StressIG_df$Percentage <- StressIG_df$Sum/(185)*100
+
+PStressIG <- subset (IG, GEN_07==c(5,4))
+PStressIG
+attach(PStressIG)
+PStressIG_T <- table(pct_time_der, GEN_07)
+PStressIG_df<-as.data.frame.matrix(addmargins(PStressIG_T))
+PStressIG_df$Percentage <- PStressIG_df$Sum/(185)*100
+
+# insert plot (not done)
+plot(StressIG_T$year,StressIG_df$Percentage)
+
+#BMI
+BMICDN <-subset(CDN,HWTGBMI_der>25)
+BMICDN$Rounded <- round(BMICDN$HWTGBMI_der)
+BMICDN
+attach(BMICDN)
+BMICDN_T <- table(year,Rounded)
+BMICDN_df<-as.data.frame.matrix(addmargins(BMICDN_T))
+BMICDN_df$Percentage <- BMICDN_df$Sum/(1185)*100
+BMICDN_df
+
+BMIIG <-subset(IG,HWTGBMI_der>25)
+BMIIG$Rounded <- round(BMIIG$HWTGBMI_der)
+BMIIG
+attach(BMIIG)
+BMIIG_T <- table(year,Rounded)
+BMIIG_df<-as.data.frame.matrix(addmargins(BMIIG_T))
+BMIIG_df$Percentage <- BMIIG_df$Sum/(185)*100
+BMIIG_df
+
+PBMIIG <-subset(IG,HWTGBMI_der>25)
+PBMIIG$Rounded <- round(PBMIIG$HWTGBMI_der)
+PBMIIG
+attach(PBMIIG)
+PBMIIG_T <- table(pct_time_der,Rounded)
+PBMIIG_df<-as.data.frame.matrix(addmargins(PBMIIG_T))
+PBMIIG_df$Percentage <- PBMIIG_df$Sum/(185)*100
+PBMIIG_df
+
+# METS (=<1.5 for inactive)
+METSCDN <-subset(CDN,PACDEE<=1.5)
+METSCDN
+attach(METSCDN)
+METSCDN_T <- table(year,PACDEE)
+METSCDN_df<-as.data.frame.matrix(addmargins(METSCDN_T))
+METSCDN_df$Percentage <- METSCDN_df$Sum/(1185)*100
+METSCDN_df
+
+METSIG <-subset(IG,PACDEE<=1.5)
+METSIG
+attach(METSIG)
+METSIG_T <- table(year,PACDEE)
+METSIG_df<-as.data.frame.matrix(addmargins(METSIG_T))
+METSIG_df$Percentage <- METSIG_df$Sum/(185)*100
+METSIG_df
+
+PMETSIG <-subset(IG,PACDEE<=1.5)
+PMETSIG
+attach(PMETSIG)
+PMETSIG_T <- table(pct_time_der,PACDEE)
+PMETSIG_df<-as.data.frame.matrix(addmargins(PMETSIG_T))
+PMETSIG_df$Percentage <- PMETSIG_df$Sum/(185)*100
+PMETSIG_df
+
+#Binge drinking (1)
+BDrinkerCDN <-subset(CDN,binge_drinker==1)
+BDrinkerCDN
+attach(BDrinkerCDN)
+BDrinkerCDN_T <- table(year,binge_drinker)
+BDrinkerCDN_df<-as.data.frame.matrix(addmargins(BDrinkerCDN_T))
+BDrinkerCDN_df$Percentage <- BDrinkerCDN_df$Sum/(1185)*100
+BDrinkerCDN_df
+
+BDrinkerIG <-subset(IG,binge_drinker==1)
+BDrinkerIG
+attach(BDrinkerIG)
+BDrinkerIG_T <- table(year,binge_drinker)
+BDrinkerIG_df<-as.data.frame.matrix(addmargins(BDrinkerIG_T))
+BDrinkerIG_df$Percentage <- BDrinkerIG_df$Sum/(185)*100
+BDrinkerIG_df
+
+PBDrinkerIG <-subset(IG,binge_drinker==1)
+PBDrinkerIG
+attach(PBDrinkerIG)
+PBDrinkerIG_T <- table(pct_time_der,binge_drinker)
+PBDrinkerIG_df<-as.data.frame.matrix(addmargins(PBDrinkerIG_T))
+PBDrinkerIG_df$Percentage <- PBDrinkerIG_df$Sum/(185)*100
+PBDrinkerIG_df
+
+#Heavy smoker (1 pack)
+SmokerCDN <-subset(CDN,SMK_204>=1)
+SmokerCDN
+attach(SmokerCDN)
+SmokerCDN_T <- table(year,SMK_204)
+SmokerCDN_df<-as.data.frame.matrix(addmargins(SmokerCDN_T))
+SmokerCDN_df$Percentage <- SmokerCDN_df$Sum/(1185)*100
+SmokerCDN_df
+
+SmokerIG <-subset(IG,SMK_204>=1)
+SmokerIG
+attach(SmokerIG)
+SmokerIG_T <- table(year,SMK_204)
+SmokerIG_df<-as.data.frame.matrix(addmargins(SmokerIG_T))
+SmokerIG_df$Percentage <- SmokerIG_df$Sum/(185)*100
+SmokerIG_df
+
+PSmokerIG <-subset(IG,SMK_204>=1)
+PSmokerIG
+attach(PSmokerIG)
+PSmokerIG_T <- table(pct_time_der,SMK_204)
+PSmokerIG_df<-as.data.frame.matrix(addmargins(PSmokerIG_T))
+PSmokerIG_df$Percentage <- PSmokerIG_df$Sum/(185)*100
+PSmokerIG_df
