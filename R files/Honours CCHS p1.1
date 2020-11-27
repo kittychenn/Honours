@@ -11,6 +11,7 @@ cchs2013_2014 <- read.csv("~/Undergrad/Honours/cchs-82M0013-E-2013-2014-Annual-C
 library(cchsflow)
 library(dplyr)
 library(tidyr)
+
 #### Length of time in Canada (2001-2013) ####
 Ctime2001 <- rec_with_table(cchs2001, "SDCGRES", log = TRUE, attach_data_name = TRUE)
 Ctime2001$year <- 2001
@@ -366,7 +367,3 @@ group_FVIG <- IG %>%
   group_by(year,SDCGRES)%>%
   summarise(total=n(),weight=sum(WTS_M))%>%
   spread(SDCGRES,total)
-
-#### Reg ####
-summary(group_BDrinkerIG)
-lm(cbind("1","2"))
