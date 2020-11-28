@@ -1,0 +1,53 @@
+Nov 13
+-switch CCHS data > derived functions not orking with CCHS
+
+Nov 14
+-use dpylr/tidyverse to create summary tables
+
+Nov 22
+-fixed error > not read_r
+-fixed all tables 
+
+Nov 23
+-for recent/resettled SDSGRES (0-9 years (1) and (10+ years (2)))
+>>pct doesn't work for 13 years and estimate
+-prop was useless > use weights 
+
+Nov 24
+-mini tables does
+NEXT
+> read up on multivariate or reg analysis in R 
+> plot trends for each behaviour 
+> compile data for PBL
+
+Nov 26
+-upload to GitHub and attempt GitKraken
+
+Nov 27
+-include recommended variables from PBL and attempted calculator
+
+Nov 28
+-calculator didn't load after 5hrs > attempted 100% data for 2013 but didn't work..
+-populations per year by adding weights
+NEXT
+> mutate such that there are no NA 
+> mutate proportion /
+> email Doug about prevalence packages, GitKraken ?
+> split combined in half ?
+> graph
+
+Dec 1
+- fixed NA pop total for 2013, there are 3 NA values in the weights when transferring from file to flow > only issue with FV 
+
+Follow up
+>work on PBL later once I get response about large file 
+NEXT
+>graph
+>regression
+>split files into combined, tables/graph
+
+Dec 4
+- split file, test PBL tmrw?
+- graphs done > still need title
+
+
