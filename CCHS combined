@@ -1,4 +1,5 @@
-## CCHS Data
+## CCHS Data ##
+
 cchs2001 <- read.csv("~/Undergrad/Honours/cchs-82M0013-E-2001-c1-1-general-file_F1.csv")
 cchs2003 <- read.csv("~/Undergrad/Honours/cchs-82M0013-E-2003-c2-1-GeneralFile_F1.csv")
 cchs2005 <- read.csv("~/Undergrad/Honours/cchs-82M0013-E-2005-c3-1-main-file_F1.csv")
@@ -11,6 +12,7 @@ cchs2013_2014 <- read.csv("~/Undergrad/Honours/cchs-82M0013-E-2013-2014-Annual-C
 library(cchsflow)
 library(dplyr)
 library(tidyr)
+
 #### Length of time in Canada (2001-2013) ####
 Ctime2001 <- rec_with_table(cchs2001, "SDCGRES", log = TRUE, attach_data_name = TRUE)
 Ctime2001$year <- 2001
@@ -57,31 +59,6 @@ IS_combined<- bind_rows(IS)
 get_label(IS_combined)
 labeled_IS_combined <- set_data_labels(IS_combined,variable_details,variables)
 get_label(labeled_IS_combined)
-
-## Percentage of time in Canada 
-pct_time2001 <- rec_with_table(cchs2001, c("DHHGAGE_cont","SDCGCBG", "SDCGRES","pct_time_der"),log=TRUE, attach_data_name = TRUE)
-pct_time2001$year <- 2001
-pct_time2003 <- rec_with_table(cchs2003, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
-pct_time2003$year <- 2003
-pct_time2005 <- rec_with_table(cchs2005, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
-pct_time2005$year <- 2005
-pct_time2007_2008 <- rec_with_table(cchs2007_2008, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
-pct_time2007_2008$year <- 2007
-pct_time2009_2010 <- rec_with_table(cchs2009_2010, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
-pct_time2009_2010$year <- 2009
-pct_time2011_2012 <- rec_with_table(cchs2011_2012, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
-pct_time2011_2012$year <- 2011
-pct_time2013_2014 <- rec_with_table(cchs2013_2014, c("DHHGAGE_cont", "SDCGCBG", "SDCGRES", "pct_time_der"), log = TRUE, attach_data_name = TRUE)
-pct_time2013_2014$year <- 2013
-
-pct_time <- list(pct_time2001, pct_time2003, pct_time2005, pct_time2007_2008, pct_time2009_2010,pct_time2011_2012, pct_time2013_2014)
-
-pct_time <- list(pct_time2001, pct_time2003, pct_time2005, pct_time2007_2008, pct_time2009_2010,pct_time2011_2012, pct_time2013_2014) 
-pct_time_combined<- bind_rows(pct_time)
-
-get_label(pct_time_combined)
-labeled_pct_time_combined <- set_data_labels(pct_time_combined,variable_details,variables)
-get_label(labeled_pct_time_combined)
 
 #### Unhealthy habits: Binge drinking, smoking, stress, BMI, METS, Diet ####
 
@@ -181,19 +158,19 @@ labeled_METS_combined <- set_data_labels(METS_combined,variable_details,variable
 get_label(labeled_METS_combined)
 
 ## F/V? FVCDTOT
-FV2001 <- rec_with_table(cchs2001, "FVCDTOT", log = TRUE  )
+FV2001 <- rec_with_table(cchs2001, c("FVCDCAR","FVCDFRU","FVCDJUI","FVCDPOT","FVCDSAL", "FVCDVEG","FVCDTOT"), log = TRUE  )
 FV2001$year <- 2001
-FV2003 <- rec_with_table(cchs2003, "FVCDTOT", log = TRUE  )
+FV2003 <- rec_with_table(cchs2003, c("FVCDCAR","FVCDFRU","FVCDJUI","FVCDPOT","FVCDSAL", "FVCDVEG","FVCDTOT"), log = TRUE  )
 FV2003$year <- 2003
-FV2005 <- rec_with_table(cchs2005, "FVCDTOT", log = TRUE  )
+FV2005 <- rec_with_table(cchs2005, c("FVCDCAR","FVCDFRU","FVCDJUI","FVCDPOT","FVCDSAL", "FVCDVEG","FVCDTOT"), log = TRUE  )
 FV2005$year <- 2005
-FV2007_2008 <- rec_with_table(cchs2007_2008, "FVCDTOT", log = TRUE  )
+FV2007_2008 <- rec_with_table(cchs2007_2008, c("FVCDCAR","FVCDFRU","FVCDJUI","FVCDPOT","FVCDSAL", "FVCDVEG","FVCDTOT"), log = TRUE  )
 FV2007_2008$year <- 2007
-FV2009_2010 <- rec_with_table(cchs2009_2010, "FVCDTOT", log = TRUE  )
+FV2009_2010 <- rec_with_table(cchs2009_2010, c("FVCDCAR","FVCDFRU","FVCDJUI","FVCDPOT","FVCDSAL", "FVCDVEG","FVCDTOT"), log = TRUE  )
 FV2009_2010$year <- 2009
-FV2011_2012 <- rec_with_table(cchs2011_2012, "FVCDTOT", log = TRUE  )
+FV2011_2012 <- rec_with_table(cchs2011_2012, c("FVCDCAR","FVCDFRU","FVCDJUI","FVCDPOT","FVCDSAL", "FVCDVEG","FVCDTOT"), log = TRUE  )
 FV2011_2012$year <- 2011
-FV2013_2014 <- rec_with_table(cchs2013_2014, "FVCDTOT", log = TRUE  )
+FV2013_2014 <- rec_with_table(cchs2013_2014, c("FVCDCAR","FVCDFRU","FVCDJUI","FVCDPOT","FVCDSAL", "FVCDVEG","FVCDTOT"), log = TRUE  )
 FV2013_2014$year <- 2013
 
 FV <- list(FV2001, FV2003, FV2005, FV2007_2008, FV2009_2010,FV2011_2012, FV2013_2014)
@@ -204,37 +181,42 @@ get_label(FV_combined)
 labeled_FV_combined <- set_data_labels(FV_combined,variable_details,variables)
 get_label(labeled_FV_combined)
 
-#### Survey Weights ####
-SW2001 <- rec_with_table(cchs2001, "WTS_M", log = TRUE  )
-SW2003 <- rec_with_table(cchs2003, "WTS_M", log = TRUE  )
-SW2005 <- rec_with_table(cchs2005, "WTS_M", log = TRUE  )
-SW2007_2008 <- rec_with_table(cchs2007_2008, "WTS_M", log = TRUE  )
-SW2009_2010 <- rec_with_table(cchs2009_2010, "WTS_M", log = TRUE  )
-SW2011_2012 <- rec_with_table(cchs2011_2012, "WTS_M", log = TRUE  )
-SW2013_2014 <- rec_with_table(cchs2013_2014, "WTS_M", log = TRUE  )
+#### Recommended Variables for PBL ####
+REC2001 <- rec_with_table(cchs2001, c("WTS_M","DHHGAGE_cont","ALWDWKY","CCC_071","CCC_091","CCC_101","CCC_121","CCC_131","CCC_151","CCC_280","EDUDR04","HWTGBMI","SDCGCGT","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+REC2003 <- rec_with_table(cchs2003, c("WTS_M","DHHGAGE_cont","ALWDWKY","CCC_071","CCC_091","CCC_101","CCC_121","CCC_131","CCC_151","CCC_280","EDUDR04","HWTGBMI","SDCGCGT","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+REC2005 <- rec_with_table(cchs2005, c("WTS_M","DHHGAGE_cont","ALWDWKY","CCC_071","CCC_091","CCC_101","CCC_121","CCC_131","CCC_151","CCC_280","EDUDR04","HWTGBMI","SDCGCGT","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+REC2007_2008 <- rec_with_table(cchs2007_2008, c("WTS_M","DHHGAGE_cont","ALWDWKY","CCC_071","CCC_091","CCC_101","CCC_121","CCC_131","CCC_151","CCC_280","EDUDR04","HWTGBMI","SDCGCGT","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+REC2009_2010 <- rec_with_table(cchs2009_2010, c("WTS_M","DHHGAGE_cont","ALWDWKY","CCC_071","CCC_091","CCC_101","CCC_121","CCC_131","CCC_151","CCC_280","EDUDR04","HWTGBMI","SDCGCGT","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+REC2011_2012 <- rec_with_table(cchs2011_2012, c("WTS_M","DHHGAGE_cont","ALWDWKY","CCC_071","CCC_091","CCC_101","CCC_121","CCC_131","CCC_151","CCC_280","EDUDR04","HWTGBMI","SDCGCGT","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+REC2013_2014 <- rec_with_table(cchs2013_2014, c("WTS_M","DHHGAGE_cont","ALWDWKY","CCC_071","CCC_091","CCC_101","CCC_121","CCC_131","CCC_151","CCC_280","EDUDR04","HWTGBMI","SDCGCGT","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
 
-SW <- list(SW2001, SW2003, SW2005, SW2007_2008, SW2009_2010,SW2011_2012, SW2013_2014)
-SW_combined <- bind_rows(SW)
-SW_combined
+REC <- list(REC2001, REC2003, REC2005, REC2007_2008, REC2009_2010,REC2011_2012, REC2013_2014)
+REC_combined <- bind_rows(REC)
+REC_combined
 
-get_label(SW_combined)
-labeled_SW_combined <- set_data_labels(SW_combined,variable_details,variables)
-get_label(labeled_SW_combined)
+get_label(REC_combined)
+labeled_REC_combined <- set_data_labels(REC_combined,variable_details,variables)
+get_label(labeled_REC_combined)
 
 #### COMBINED ####
-combined <-cbind(labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_pct_time_combined,labeled_FV_combined,labeled_SW_combined)
+combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_FV_combined,labeled_REC_combined)
 get_label(combined)
 labeled_combined <- set_data_labels(combined,variable_details,variables)
 get_label(labeled_combined)
 
+labeled_Time_in_Canada_combined[,c('data_name','year')] <- NULL
 labeled_Bdrinker_combined[,c('date_year','year')] <- NULL
 labeled_METS_combined[,c('date_year','year')] <- NULL
 labeled_Smoker_combined[,c('date_year','year')] <- NULL
 labeled_Stress_combined[,c('date_year','year')] <- NULL
 labeled_FV_combined[,c('date_year','year')] <- NULL
-labeled_pct_time_combined[,c('date_name','year')] <- NULL
 
-combined <-cbind(labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_pct_time_combined, labeled_FV_combined, labeled_SW_combined)
+combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_FV_combined, labeled_REC_combined)
+names(combined)[names(combined)=="DHHGAGE_cont"] <-"DHHGAGE"
+names(combined)[names(combined)=="SMK_09A_cont"] <-"SMK_09A"
+names(combined)[names(combined)=="SMKG01C_cont"] <-"SMKG01C"
+names(combined)[names(combined)=="SMKG203_cont"] <-"SMKG203"
+
 
 #### Population ####
 #### CDN Born
@@ -366,7 +348,3 @@ group_FVIG <- IG %>%
   group_by(year,SDCGRES)%>%
   summarise(total=n(),weight=sum(WTS_M))%>%
   spread(SDCGRES,total)
-
-#### Reg ####
-summary(group_BDrinkerIG)
-lm(cbind("1","2"))
