@@ -1,0 +1,342 @@
+#### Pop by behaviour ####
+#High stress (4,5)
+
+ss <- c(4,5)
+StressCDN <- CDN %>% 
+  filter(GEN_07 %in% ss) %>%
+  select(year,GEN_07,WTS_M) %>%
+  group_by(year,GEN_07)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(GEN_07,Total)%>%
+  rename('Quite a bit'='4',Extremely='5') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+StressIG <- IG %>%
+  filter(GEN_07 %in% ss) %>%
+  select(year,GEN_07,WTS_M) %>%
+  group_by(year,GEN_07)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(GEN_07,Total)%>%
+  rename('Quite a bit'='4',Extremely='5') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_StressIG <- IG %>%
+  filter(GEN_07 %in% ss) %>%
+  select(year,SDCGRES,GEN_07,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1','10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_StressIG1 <- IG %>% 
+  filter(GEN_07 %in% ss) %>%
+  filter(SDCGRES==1)%>%
+  select(year,SDCGRES,GEN_07,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_StressIG2 <- IG %>%
+  filter(GEN_07 %in% ss) %>%
+  filter(SDCGRES==2)%>%
+  select(year,SDCGRES,GEN_07,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+# METS (=<1.5 for inactive)
+METSCDN <- CDN %>% #
+  filter(PACDEE<=1.5) %>%
+  select(year,PACDEE,WTS_M) %>%
+  group_by(year,PACDEE)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(PACDEE,Total) %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+METSIG <- IG %>%
+  filter(PACDEE<=1.5) %>%
+  select(year,PACDEE,WTS_M) %>%
+  group_by(year,PACDEE)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(PACDEE,Total) %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_METSIG <-IG %>%
+  filter(PACDEE<=1.5) %>%
+  select(year,PACDEE,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1','10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_METSIG1 <-IG %>%
+  filter(PACDEE<=1.5) %>%
+  filter(SDCGRES==1)%>%
+  select(year,PACDEE,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_METSIG2 <-IG %>%
+  filter(PACDEE<=1.5) %>%
+  filter(SDCGRES==2)%>%
+  select(year,PACDEE,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+#Binge drinking (1)
+BDrinkerCDN <- CDN %>%
+  filter(binge_drinker==1) %>%
+  select(year,binge_drinker,WTS_M) %>%
+  group_by(year,binge_drinker)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(binge_drinker,Total)%>%
+  rename('Binge'='1') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+BDrinkerIG <- IG %>%
+  filter(binge_drinker==1) %>%
+  select(year,binge_drinker,WTS_M) %>%
+  group_by(year,binge_drinker)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(binge_drinker,Total)%>%
+  rename('Binge'='1') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_BDrinkerIG <-IG %>%
+  filter(binge_drinker==1) %>%
+  select(year,binge_drinker,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1','10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_BDrinkerIG1 <-IG %>%
+  filter(binge_drinker==1) %>%
+  filter(SDCGRES==1)%>%
+  select(year,binge_drinker,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_BDrinkerIG2 <-IG %>%
+  filter(binge_drinker==1) %>%
+  filter(SDCGRES==2)%>%
+  select(year,binge_drinker,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+
+#Heavy smoker (1 pack)
+SmokerCDN <- CDN %>%
+  filter(SMK_204>=20) %>%
+  select(year,SMK_204,WTS_M) %>%
+  group_by(year,SMK_204)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SMK_204,Total) %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+SmokerIG <- IG %>%
+  filter(SMK_204>=20) %>%
+  select(year,SMK_204,WTS_M) %>%
+  group_by(year,SMK_204)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SMK_204,Total) %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_SmokerIG <-IG %>%
+  filter(SMK_204>=20) %>%
+  select(year,SMK_204,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1','10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_SmokerIG1 <-IG %>%
+  filter(SMK_204>=20)  %>%
+  filter(SDCGRES==1)%>%
+  select(year,SMK_204,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_SmokerIG2 <-IG %>%
+  filter(SMK_204>=20)  %>%
+  filter(SDCGRES==2)%>%
+  select(year,SMK_204,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+#FV (<5)
+FVCDN <- CDN %>%
+  filter(FVCDTOT<5) %>%
+  select(year,FVCDTOT,WTS_M) %>%
+  mutate(FVCDTOT=round(FVCDTOT)) %>%
+  group_by(year,FVCDTOT)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(FVCDTOT,Total) %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+FVIG <- IG %>%
+  filter(FVCDTOT<5) %>%
+  select(year,FVCDTOT,WTS_M) %>%
+  mutate(FVCDTOT=round(FVCDTOT)) %>%
+  group_by(year,FVCDTOT)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(FVCDTOT,Total) %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_FVIG <- IG %>%
+  filter(FVCDTOT<5) %>%
+  select(year,FVCDTOT,SDCGRES,WTS_M) %>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1','10+ years'='2') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+  
+group_FVIG1 <- IG %>%
+  filter(FVCDTOT<5) %>%
+  filter(SDCGRES==1)%>%
+  select(year,FVCDTOT,SDCGRES,WTS_M)%>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('0-9 years'='1') %>%
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+group_FVIG2 <- IG %>%
+  filter(FVCDTOT<5) %>%
+  filter(SDCGRES==2)%>%
+  select(year,FVCDTOT,SDCGRES,WTS_M)%>%
+  group_by(year,SDCGRES)%>%
+  summarise(Total=n(),Weight=sum(WTS_M))%>%
+  spread(SDCGRES,Total)%>%
+  rename('10+ years'='2') %>% #weight for 2013=0 because of 3 NA
+  replace(is.na(.), 0) %>%
+  group_by(year) %>%
+  summarise_all(sum)%>%
+  mutate(Prevalence=Weight/pop)
+
+#### graph ####
+require(ggplot2)
+
+#Binge drinker by resettlement
+ggplot()+
+  geom_line(data=group_BDrinkerIG1 ,aes(x=year,y=Prevalence,color="0-9 years"))+
+  geom_line(data=group_BDrinkerIG2 ,aes(x=year,y=Prevalence,color="10+ years"))
+
+#Smoker by resettlement
+ggplot()+
+  geom_line(data=group_SmokerIG1 ,aes(x=year,y=Prevalence,color="0-9 years"))+
+  geom_line(data=group_SmokerIG2 ,aes(x=year,y=Prevalence,color="10+ years"))
+
+#METS by resettlement
+ggplot()+
+  geom_line(data=group_METSIG1 ,aes(x=year,y=Prevalence,color="0-9 years"))+
+  geom_line(data=group_METSIG2 ,aes(x=year,y=Prevalence,color="10+ years"))
+
+#Stress by resettlement
+ggplot()+
+  geom_line(data=group_StressIG1 ,aes(x=year,y=Prevalence,color="0-9 years"))+
+  geom_line(data=group_StressIG2 ,aes(x=year,y=Prevalence,color="10+ years"))
+
+#FV by resettlement > error with 2013 for group2
+ggplot()+
+  geom_line(data=group_FVIG1,aes(x=year,y=Prevalence,color="0-9 years"))+
+  geom_line(data=group_FVIG2,aes(x=year,y=Prevalence,color="10+ years"))
