@@ -1,11 +1,9 @@
 library(tableone)
-library(questionr)
 
-CreateTableOne(data=combined)
-rm(T1COMBINED)
-T1COMBINED <- combined
+T1COMBINED <- combined %>%
+  filter(SDCFIMM==1|SDCFIMM==2)
 
-###Rename ###
+####Rename ####
 #sex
 levels(T1COMBINED$DHH_SEX)
 T1COMBINED$DHH_SEX <-
@@ -55,11 +53,21 @@ T1COMBINED <- T1COMBINED %>%
 colnames(T1COMBINED)
 
 ###########################
+####Table1 total####
 c('DHH_SEX','SDCGRES','binge_drinker','PACDEE','GEN_07','SMK_204','FVCDTOT','SDCFIMM','DHHGAGE_cont') #original column names
-myVars <- c('Sex','Age','Time in Canada','Alcohol','Physical activity','Stress','Smoking','Diet' ) 
-strata <- c('Immigrant status')
 
-tableOne<- CreateTableOne(vars=myVars, strata=strata,data=T1COMBINED)
-print(tableOne)
+myVars <- c('Sex','Age','Immigrant status','Time in Canada','Alcohol','Physical activity','Stress','Smoking','Diet' )
+tableOne<- CreateTableOne(vars=myVars,data=T1COMBINED)
 tb1<- print(tableOne)
 write.csv(tb1,"TableOne1.csv")
+
+####Table1 by sex####
+myVars <- c('Age','Immigrant status','Time in Canada','Alcohol','Physical activity','Stress','Smoking','Diet' )
+tableOne.1 <-CreateTableOne(vars=myVars1, strata='Sex',data=T1COMBINED)
+
+####Table2 strat immigrants####
+myVars2 <- c('Sex','Age','Time in Canada','Alcohol','Physical activity','Stress','Smoking','Diet' ) 
+
+tableTwo<- CreateTableOne(vars=myVars2,strata='Immigrant status',data=T1COMBINED)
+tb2<- print(tableTwo)
+write.csv(tb2,"TableOne2.csv")
