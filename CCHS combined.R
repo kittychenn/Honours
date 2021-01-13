@@ -241,6 +241,15 @@ labeled_FV_combined[,c('date_year','year')] <- NULL
 combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_FV_combined, labeled_REC_combined)
 
 # refer to PBL modification 
+#### Prevalence ####
+combined <- combined %>%
+  mutate(Prevalence=as.numeric(ifelse(year==2001,WTS_M/25787334,
+                                      ifelse(year==2003, WTS_M/26555430,
+                                             ifelse(year==2005, WTS_M/27126165,
+                                                    ifelse(year==2007, WTS_M/28017372,
+                                                           ifelse(year==2009,WTS_M/28725105,
+                                                                  ifelse(year==2011,WTS_M/29335211,
+                                                                         ifelse(year==2013,WTS_M/30002838,"missing")))))))))
 
 #### Population ####
 
