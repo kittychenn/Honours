@@ -82,8 +82,8 @@ Immigrant - unhealthy
 6) all five?
 
 CDN - unhealthy
-1) strat: year, SDCGRES, filter: binge = 1, SDCFIMM=2
-2) strat: year, SDCGRES, filter: GEN_07= 4,5, SDCFIMM=2
+1) strat: year, SDCGRES, filter: binge = 1, SDCFIMM=2 
+2) strat: year, SDCGRES, filter: GEN_07= 4,5, SDCFIMM=2 
 3) strat: year, SDCGRES, filter: SMK_204>=20, SDCFIMM=2
 4) strat: year, SDCGRES, filter: PACDEE= <=1.5, SDCFIMM=2
 5) strat: year, SDCGRES, filter: FVCDTOT<5, SDCFIMM=2
@@ -97,6 +97,40 @@ finish PBL tests
 weighted tableone 
 graphs of all three populations 
 
+Jan 7
+-PBL test done
+NEXT
+-add smoking derived function
+-weighted tableone
+-3 reg 
+-tableone, table2 (filter for gres=1,2)
+
+Jan 9
+-table2
+
+Jan 12
+-prevalence
+NEXT
+-test graphs with new prevalence / - the same
+-regression /
+-smoking der fun to new col /
+-smoke PBL
+
+Jan 18
+-smoking and diet fun added 
+-regression
+NEXT
+-smoke PBL
+-diet PBL /
+-compile reg
+-fix all smoke 
+
+Jan 28
+-regression
+-comments
+NEXT
+-smoking PBL
+-fix all smoke
 
 
 

@@ -1,5 +1,4 @@
 ## pack year function
-attach(labeled_Smoker_combined)
 pack_years_fun <-
   function(SMKDSTY, DHHGAGE_cont, SMK_09A_cont, SMKG09C, SMKG203_cont,
            SMKG207_cont, SMK_204, SMK_05B,
@@ -68,12 +67,8 @@ pack_years_fun <-
     )
   }
 
+attach(combined)
+combined$Smoke_Status <-pack_years_fun(SMKDSTY, DHHGAGE_cont, SMK_09A_cont, SMKG09C, SMKG203_cont,
+                               SMKG207_cont, SMK_204, SMK_05B,
+                               SMK_208, SMK_05C, SMKG01C_cont, SMK_01A)
 
-x <-list(Smoker_combined$SMKDSTY, Smoker_combined$DHHGAGE_cont, Smoker_combined$SMK_09A_cont, Smoker_combined$SMKG09C, Smoker_combined$SMKG203_cont,
-     SMKG207_cont, Smoker_combined$SMK_204, Smoker_combined$SMK_05B,
-     SMK_208, Smoker_combined$SMK_05C, Smoker_combined$SMKG01C_cont, Smoker_combined$SMK_01A)
-Smoker_combined$smoke_status<-lapply(x, pack_years_fun(x))
-
-pack_years_fun(1,1,1,1,1,1,1,1,1,1,1,1)
-
-                                     
