@@ -207,32 +207,32 @@ group_BDrinkerIG2 <-IG %>%
   mutate(Binge_Drinking_Prevalence=Weight/Wpop)
 
 
-###Heavy smoker (1 pack)###
+###Smoker (>0 pack_year)###
 SmokerCDN <- CDN %>%
-  filter(SMK_204>=20) %>%
-  select(Year,SMK_204,WTS_M) %>%
-  group_by(Year,SMK_204)%>%
+  filter(Smoke_Status>0) %>%
+  select(Year,Smoke_Status,WTS_M) %>%
+  group_by(Year,Smoke_Status)%>%
   summarise(Total=n(),Weight=sum(WTS_M))%>%
-  spread(SMK_204,Total) %>%
+  spread(Smoke_Status,Total) %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
   mutate(Smoking_Prevalence=Weight/Wpop)
 
 SmokerIG <- IG %>%
-  filter(SMK_204>=20) %>%
-  select(Year,SMK_204,WTS_M) %>%
-  group_by(Year,SMK_204)%>%
+  filter(Smoke_Status>=20) %>%
+  select(Year,Smoke_Status,WTS_M) %>%
+  group_by(Year,Smoke_Status)%>%
   summarise(Total=n(),Weight=sum(WTS_M))%>%
-  spread(SMK_204,Total) %>%
+  spread(Smoke_Status,Total) %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
   mutate(Smoking_Prevalence=Weight/Wpop)
 
 group_SmokerIG <-IG %>%
-  filter(SMK_204>=20) %>%
-  select(Year,SMK_204,SDCGRES,WTS_M) %>%
+  filter(Smoke_Status>=20) %>%
+  select(Year,Smoke_Status,SDCGRES,WTS_M) %>%
   group_by(Year,SDCGRES)%>%
   summarise(Total=n(),Weight=sum(WTS_M))%>%
   spread(SDCGRES,Total)%>%
@@ -243,9 +243,9 @@ group_SmokerIG <-IG %>%
   mutate(Smoking_Prevalence=Weight/Wpop)
 
 group_SmokerIG1 <-IG %>%
-  filter(SMK_204>=20)  %>%
+  filter(Smoke_Status>=20)  %>%
   filter(SDCGRES==1)%>%
-  select(Year,SMK_204,SDCGRES,WTS_M) %>%
+  select(Year,Smoke_Status,SDCGRES,WTS_M) %>%
   group_by(Year,SDCGRES)%>%
   summarise(Total=n(),Weight=sum(WTS_M))%>%
   spread(SDCGRES,Total)%>%
@@ -256,9 +256,9 @@ group_SmokerIG1 <-IG %>%
   mutate(Smoking_Prevalence=Weight/Wpop)
 
 group_SmokerIG2 <-IG %>%
-  filter(SMK_204>=20)  %>%
+  filter(Smoke_Status>=20)  %>%
   filter(SDCGRES==2)%>%
-  select(Year,SMK_204,SDCGRES,WTS_M) %>%
+  select(Year,Smoke_Status,SDCGRES,WTS_M) %>%
   group_by(Year,SDCGRES)%>%
   summarise(Total=n(),Weight=sum(WTS_M))%>%
   spread(SDCGRES,Total)%>%
@@ -400,25 +400,25 @@ REG_group_StressIG1 <- lm(High_Stress_Prevalence~Year,data=group_StressIG1)
 REG_group_StressIG2 <- lm(High_Stress_Prevalence~Year,data=group_StressIG2)
 
 #Binge drinking
-REG_BDrinkerCDN <- lm(Binge_Drinking_Prevalence_Prevalence~Year,data=BDrinkerCDN)
-REG_BDrinkerIG <- lm(Binge_Drinking_Prevalence_Prevalence~Year,data=BDrinkerIG)
-REG_group_BDrinkerIG <- lm(Binge_Drinking_Prevalence_Prevalence~Year,data=group_BDrinkerIG)
-REG_group_BDrinkerIG1 <- lm(Binge_Drinking_Prevalence_Prevalence~Year,data=group_BDrinkerIG1)
-REG_group_BDrinkerIG2 <- lm(Binge_Drinking_Prevalence_Prevalence~Year,data=group_BDrinkerIG2)
+REG_BDrinkerCDN <- lm(Binge_Drinking_Prevalence~Year,data=BDrinkerCDN)
+REG_BDrinkerIG <- lm(Binge_Drinking_Prevalence~Year,data=BDrinkerIG)
+REG_group_BDrinkerIG <- lm(Binge_Drinking_Prevalence~Year,data=group_BDrinkerIG)
+REG_group_BDrinkerIG1 <- lm(Binge_Drinking_Prevalence~Year,data=group_BDrinkerIG1)
+REG_group_BDrinkerIG2 <- lm(Binge_Drinking_Prevalence~Year,data=group_BDrinkerIG2)
 
 #METS
-REG_METSCDN <- lm(Inactivity_Prevalence_Prevalence~Year,data=METSCDN)
-REG_METSIG <- lm(Inactivity_Prevalence_Prevalence~Year,data=METSIG)
-REG_group_METSIG <- lm(Inactivity_Prevalence_Prevalence~Year,data=group_METSIG)
-REG_group_METSIG1 <- lm(Inactivity_Prevalence_Prevalence~Year,data=group_METSIG1)
-REG_group_METSIG2 <- lm(Inactivity_Prevalence_Prevalence~Year,data=group_METSIG2)
+REG_METSCDN <- lm(Inactivity_Prevalence~Year,data=METSCDN)
+REG_METSIG <- lm(Inactivity_Prevalence~Year,data=METSIG)
+REG_group_METSIG <- lm(Inactivity_Prevalence~Year,data=group_METSIG)
+REG_group_METSIG1 <- lm(Inactivity_Prevalence~Year,data=group_METSIG1)
+REG_group_METSIG2 <- lm(Inactivity_Prevalence~Year,data=group_METSIG2)
 
 #Smoking
-REG_SmokerCDN <- lm(Smoking_Prevalence_Prevalence~Year,data=SmokerCDN)
-REG_SmokerIG <- lm(Smoking_Prevalence_Prevalence~Year,data=SmokerIG)
-REG_group_SmokerIG <- lm(Smoking_Prevalence_Prevalence~Year,data=group_SmokerIG)
-REG_group_SmokerIG1 <- lm(Smoking_Prevalence_Prevalence~Year,data=group_SmokerIG1)
-REG_group_SmokerIG2 <- lm(Smoking_Prevalence_Prevalence~Year,data=group_SmokerIG2)
+REG_SmokerCDN <- lm(Smoking_Prevalence~Year,data=SmokerCDN)
+REG_SmokerIG <- lm(Smoking_Prevalence~Year,data=SmokerIG)
+REG_group_SmokerIG <- lm(Smoking_Prevalence~Year,data=group_SmokerIG)
+REG_group_SmokerIG1 <- lm(Smoking_Prevalence~Year,data=group_SmokerIG1)
+REG_group_SmokerIG2 <- lm(Smoking_Prevalence~Year,data=group_SmokerIG2)
 
 #Diet
 REG_DietCDN <- lm(Poor_Diet_Prevalence~Year,data=DietCDN)
