@@ -82,7 +82,7 @@ get_label(pct_time_combined)
 labeled_pct_time_combined <- set_data_labels(pct_time_combined,variable_details,variables)
 get_label(labeled_pct_time_combined)
 
-#### Unhealthy habits: Binge drinking, smoking, stress, BMI, METS, Diet ####
+#### Unhealthy habits: Binge drinking, smoking, stress,  METS, Diet ####
 
 ## Binge drinker
 Bdrinker2001 <- rec_with_table(cchs2001, c(   "ALW_1", "DHH_SEX", "ALW_2A1", "ALW_2A2", "ALW_2A3", "ALW_2A4",   "ALW_2A5", "ALW_2A6", "ALW_2A7", "binge_drinker"), log = TRUE  )
@@ -109,19 +109,19 @@ get_label(labeled_Bdrinker_combined)
 
 
 ## Smoker 
-Smoker2001 <- rec_with_table(cchs2001, c("SMK_09A_B","SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
+Smoker2001 <- rec_with_table(cchs2001, c("SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
 Smoker2001$year <- 2001
-Smoker2003 <- rec_with_table(cchs2003, c("SMK_09A_B","SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
+Smoker2003 <- rec_with_table(cchs2003, c("SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
 Smoker2003$year <- 2003
-Smoker2005 <- rec_with_table(cchs2005, c("SMK_09A_B","SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
+Smoker2005 <- rec_with_table(cchs2005, c("SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
 Smoker2005$year <- 2005
-Smoker2007_2008 <- rec_with_table(cchs2007_2008, c("SMK_09A_B","SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
+Smoker2007_2008 <- rec_with_table(cchs2007_2008, c("SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
 Smoker2007_2008$year <- 2007
-Smoker2009_2010 <- rec_with_table(cchs2009_2010, c("SMK_09A_B","SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
+Smoker2009_2010 <- rec_with_table(cchs2009_2010, c("SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
 Smoker2009_2010$year <- 2009
-Smoker2011_2012 <- rec_with_table(cchs2011_2012, c("SMK_09A_B","SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+Smoker2011_2012 <- rec_with_table(cchs2011_2012, c("SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
 Smoker2011_2012$year <- 2011
-Smoker2013_2014 <- rec_with_table(cchs2013_2014, c("SMK_09A_B","SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont"), log = TRUE  )
+Smoker2013_2014 <- rec_with_table(cchs2013_2014, c("SMKG207_cont","SMK_204","SMK_01A","SMK_05B","SMK_05C","SMK_09A_cont","SMK_208","SMKDSTY","SMKG01C_cont","SMKG09C","SMKG203_cont","pack_years_der"), log = TRUE  )
 Smoker2013_2014$year <- 2013
 
 Smoker <- list(Smoker2001, Smoker2003, Smoker2005, Smoker2007_2008, Smoker2009_2010,Smoker2011_2012, Smoker2013_2014)
