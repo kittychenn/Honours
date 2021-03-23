@@ -12,7 +12,7 @@ StressCDN <- CDN %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(High_Stress_Prevalence=Weight/Wpop*100)
+  mutate(High_Stress_Prevalence=Weight/CDN_WPop*100)
 
 #0-9 Years
 group_StressIG1 <- IG %>% 
@@ -26,7 +26,7 @@ group_StressIG1 <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(High_Stress_Prevalence=Weight/Wpop*100)
+  mutate(High_Stress_Prevalence=Weight/RecentIG_WPop*100)
 
 #10+ Years
 group_StressIG2 <- IG %>%
@@ -40,7 +40,7 @@ group_StressIG2 <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(High_Stress_Prevalence=Weight/Wpop*100)
+  mutate(High_Stress_Prevalence=Weight/ResettledIG_WPop*100)
 
 ### METS (=<1.5 for inactive) ###
 
@@ -54,7 +54,7 @@ METSCDN <- CDN %>% #
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Inactivity_Prevalence=Weight/Wpop*100)
+  mutate(Inactivity_Prevalence=Weight/CDN_WPop*100)
 
 ## Immigrant
 #0-9 Years
@@ -69,7 +69,7 @@ group_METSIG1 <-IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Inactivity_Prevalence=Weight/Wpop*100)
+  mutate(Inactivity_Prevalence=Weight/RecentIG_WPop*100)
 
 #10+ Years
 group_METSIG2 <-IG %>%
@@ -83,7 +83,7 @@ group_METSIG2 <-IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Inactivity_Prevalence=Weight/Wpop*100)
+  mutate(Inactivity_Prevalence=Weight/ResettledIG_WPop*100)
 
 ### Binge drinking (1) ###
 
@@ -98,7 +98,7 @@ BDrinkerCDN <- CDN %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Binge_Drinking_Prevalence=Weight/Wpop*100)
+  mutate(Binge_Drinking_Prevalence=Weight/CDN_WPop*100)
 
 ## Immigrant
 #0-9 Years
@@ -113,7 +113,7 @@ group_BDrinkerIG1 <-IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Binge_Drinking_Prevalence=Weight/Wpop*100)
+  mutate(Binge_Drinking_Prevalence=Weight/RecentIG_WPop*100)
 
 #10+ Years
 group_BDrinkerIG2 <-IG %>%
@@ -127,12 +127,12 @@ group_BDrinkerIG2 <-IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Binge_Drinking_Prevalence=Weight/Wpop*100)
+  mutate(Binge_Drinking_Prevalence=Weight/ResettledIG_WPop*100)
 
 
-###Smoker (>0 pack_year)###
+###Heavy daily smoker (>1 pack_year)###
 SmokerCDN <- CDN %>%
-  filter(Smoke_Status>0) %>%
+  filter(SMKDSTY==1 & Smoke_Status >= 1) %>%
   select(Year,Smoke_Status,WTS_M) %>%
   group_by(Year,Smoke_Status)%>%
   summarise(Total=n(),Weight=sum(WTS_M))%>%
@@ -140,12 +140,12 @@ SmokerCDN <- CDN %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Smoking_Prevalence=Weight/Wpop*100)
+  mutate(Smoking_Prevalence=Weight/CDN_WPop*100)
 
 ## Immigrant
 #0-9 Years
 group_SmokerIG1 <-IG %>%
-  filter(Smoke_Status>=20)  %>%
+  filter(SMKDSTY==1 & Smoke_Status >= 1)  %>%
   filter(SDCGRES==1)%>%
   select(Year,Smoke_Status,SDCGRES,WTS_M) %>%
   group_by(Year,SDCGRES)%>%
@@ -155,11 +155,11 @@ group_SmokerIG1 <-IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Smoking_Prevalence=Weight/Wpop*100)
+  mutate(Smoking_Prevalence=Weight/RecentIG_WPop*100)
 
 #10+ Years
 group_SmokerIG2 <-IG %>%
-  filter(Smoke_Status>=20)  %>%
+  filter(SMKDSTY==1 & Smoke_Status >= 1) %>%
   filter(SDCGRES==2)%>%
   select(Year,Smoke_Status,SDCGRES,WTS_M) %>%
   group_by(Year,SDCGRES)%>%
@@ -169,7 +169,7 @@ group_SmokerIG2 <-IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Smoking_Prevalence=Weight/Wpop*100)
+  mutate(Smoking_Prevalence=Weight/ResettledIG_WPop*100)
 
 ### Poor diet (Perez diet score<2) ###
 
@@ -184,7 +184,7 @@ DietCDN <- CDN %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Poor_Diet_Prevalence=Weight/Wpop*100)
+  mutate(Poor_Diet_Prevalence=Weight/CDN_WPop*100)
 
 ## Immigrants
 #0-9 Years
@@ -199,7 +199,7 @@ group_DietIG1 <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Poor_Diet_Prevalence=Weight/Wpop*100)
+  mutate(Poor_Diet_Prevalence=Weight/RecentIG_WPop*100)
 
 #10+ Years
 group_DietIG2 <- IG %>%
@@ -213,64 +213,78 @@ group_DietIG2 <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(Year) %>%
   summarise_all(sum)%>%
-  mutate(Poor_Diet_Prevalence=Weight/Wpop*100)
+  mutate(Poor_Diet_Prevalence=Weight/ResettledIG_WPop*100)
 
 #### graph ####
 require(ggplot2)
-windowsFont(Calibri)
+
 #Binge drinker by resettlement
 plot_BDrinker<- ggplot()+
   geom_line(data=BDrinkerCDN, aes(x=Year,y=Binge_Drinking_Prevalence,color="Canadian"))+
   geom_line(data=group_BDrinkerIG1 ,aes(x=Year,y=Binge_Drinking_Prevalence,color="Recent immigrant"))+
-  geom_line(data=group_BDrinkerIG2 ,aes(x=Year,y=Binge_Drinking_Prevalence,color="Resettled immigrant"))
-plot_BDrinker +
-  xlab("Time (year)")+
+  geom_line(data=group_BDrinkerIG2 ,aes(x=Year,y=Binge_Drinking_Prevalence,color="Resettled immigrant"))+
+  xlab("Year")+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
-  ggtitle("Prevalence of binge drinking from 2001-2013")+
-  theme(text=element_text(size=12,family= "serif"))
+  ggtitle("Binge drinking")+
+  theme(plot.title = element_text(hjust = 0.5))+ 
+  theme(legend.position = "none")+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
 #Smoker by resettlement
 plot_Smoker <- ggplot()+
   geom_line(data=group_SmokerIG1 ,aes(x=Year,y=Smoking_Prevalence,color="Recent immigrant"))+
   geom_line(data=group_SmokerIG2 ,aes(x=Year,y=Smoking_Prevalence,color="Resettled immigrant")) +
-  geom_line(data=SmokerCDN ,aes(x=Year,y=Smoking_Prevalence,color="Canadian"))
-plot_Smoker +
+  geom_line(data=SmokerCDN ,aes(x=Year,y=Smoking_Prevalence,color="Canadian"))+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
-  ggtitle("Prevalence of smoking from 2001-2013")+
-  theme(text=element_text(size=12,family= "serif"))
+  ggtitle("Heavy smoking")+
+  theme(plot.title = element_text(hjust = 0.5))+ 
+  theme(legend.position = "none")+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
 #METS by resettlement
 plot_METS <-ggplot()+
   geom_line(data=group_METSIG1 ,aes(x=Year,y=Inactivity_Prevalence,color="Recent immigrant"))+
   geom_line(data=group_METSIG2 ,aes(x=Year,y=Inactivity_Prevalence,color="Resettled immigrant")) +
-  geom_line(data=METSCDN ,aes(x=Year,y=Inactivity_Prevalence,color="Canadian"))
-plot_METS +
+  geom_line(data=METSCDN ,aes(x=Year,y=Inactivity_Prevalence,color="Canadian"))+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
-  ggtitle("Prevalence of inactivity from 2001-2013")+
-  theme(text=element_text(size=12,family= "serif"))
+  ggtitle("Inactivity")+
+  theme(plot.title = element_text(hjust = 0.5))+ 
+  theme(legend.position = "none")+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
 
 #Stress by resettlement
 plot_Stress <- ggplot()+
   geom_line(data=group_StressIG1 ,aes(x=Year,y=High_Stress_Prevalence,color="Recent immigrant"))+
   geom_line(data=group_StressIG2 ,aes(x=Year,y=High_Stress_Prevalence,color="Resettled immigrant")) +
-  geom_line(data=StressCDN, aes(x=Year, y=High_Stress_Prevalence, color = "Canadian"))
-plot_Stress +
+  geom_line(data=StressCDN, aes(x=Year, y=High_Stress_Prevalence, color = "Canadian"))+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
-  ggtitle("Prevalence of high stress from 2001-2013")+
-  theme(text=element_text(size=12,family= "serif"))
-
+  ggtitle("High stress")+
+  theme(plot.title = element_text(hjust = 0.5))+ 
+  theme(legend.position = "none")+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
 #FV by resettlement 
 plot_FV <-ggplot()+
-  geom_line(data=group_DietIG1,aes(x=Year,y=Poor_Diet_Prevalence,color="Recent immigrant"))+
+  geom_line(data=group_DietIG1,aes(x=Year,y=Poor_Diet_Prevalence, color="Recent immigrant"))+
   geom_line(data=group_DietIG2,aes(x=Year,y=Poor_Diet_Prevalence,color="Resettled immigrant"))+
-  geom_line(data=DietCDN, aes(x=Year, y=Poor_Diet_Prevalence, color="Canadian"))
-plot_FV +
+  geom_line(data=DietCDN, aes(x=Year, y=Poor_Diet_Prevalence, color="Canadian"))+
   ylab("Prevalence (%)") +
-  labs(colour="Population Groups")+
-  ggtitle("Prevalence of heavy smoking from 2001-2013")+
-  theme(text=element_text(size=12,family= "serif"))
+  labs(colour="Population groups")+
+  ggtitle("Poor diet")+
+  theme(plot.title = element_text(hjust = 0.5))+ 
+  theme(legend.position = "none")+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+plot_FV+ 
+  theme(legend.position="bottom")
 
+library(ggpubr)
+figure <- ggarrange(plot_BDrinker,plot_FV,plot_METS,plot_Smoker,plot_Stress)
+figure 
