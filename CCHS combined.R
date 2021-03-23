@@ -237,6 +237,8 @@ combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labe
 
 #### Population greater than 20 ####
 combined_age <- subset(combined,DHHGAGE_cont >=20)
+combined_age<-combined_age %>%
+  filter(SDCFIMM==1|SDCFIMM==2)
 
 # refer to PBL modification when uploading csv to PBL calculator
 # refer to Diet function.R and Smoking function.R to include diet score and pack-year cols
@@ -252,18 +254,6 @@ combined <- combined %>%
                                                                          ifelse(Year==2013,WTS_M/30002838,"missing")))))))))
 
 #### Population ####
-
-##Pop number by Year (unweighted)
-pop2001 <- sum(combined_age$Year== "2001")
-pop2003 <- sum(combined_age$Year== "2003")
-pop2005 <- sum(combined_age$Year== "2005")
-pop2007_2008 <- sum(combined_age$Year== "2007")
-pop2009_2010 <- sum(combined_age$Year== "2009")
-pop2011_2012 <- sum(combined_age$Year== "2011")
-pop2013_2014 <- sum(combined_age$Year== "2013")
-
-pop <- c(pop2001,pop2003,pop2005,pop2007_2008,pop2009_2010,pop2011_2012,pop2013_2014)
-
 
 ##Pop number by Year (weighted)
 Wpop2001 <- combined_age %>%
@@ -304,8 +294,146 @@ Wpop2013_2014 <- combined_age %>%
 
 Wpop <- as.integer(c(Wpop2001,Wpop2003,Wpop2005,Wpop2007_2008,Wpop2009_2010,Wpop2011_2012,Wpop2013_2014))
 
-
-#### CDN Born
+##### CDN Born ####
 CDN <- subset(combined_age,SDCFIMM== "2") #immigrant status - non
-#### Immigrant
-IG <- subset(combined_age,SDCFIMM== "1") #immigrant status - immigrant
+##Pop number by Year (weighted) - cdn
+CDN_WPop2001 <- CDN %>%
+  filter(Year == "2001") %>%
+  summarise(sum(WTS_M))
+
+CDN_WPop2003 <- CDN %>%
+  filter(Year == "2003") %>%
+  summarise(sum(WTS_M))
+
+CDN_WPop2005 <- CDN %>%
+  filter(Year == "2005") %>%
+  summarise(sum(WTS_M))
+
+CDN_WPop2007_2008 <- CDN %>%
+  filter(Year == "2007") %>%
+  summarise(sum(WTS_M))
+
+CDN_WPop2009_2010 <- CDN %>%
+  filter(Year == "2009") %>%
+  summarise(sum(WTS_M))
+
+CDN_WPop2011_2012 <- CDN %>%
+  filter(Year == "2011") %>%
+  summarise(sum(WTS_M))
+
+CDN_WPop2013_2014 <- CDN %>%
+  filter(Year == "2013") %>%
+  summarise(sum(WTS_M)) 
+
+CDN_WPop<- as.integer(c(CDN_WPop2001,CDN_WPop2003,CDN_WPop2005,CDN_WPop2007_2008,CDN_WPop2009_2010,CDN_WPop2011_2012,CDN_WPop2013_2014))
+
+## weighted pop CDN (TOTAL)
+WpopCDN <- sum(CDN$WTS_M)
+
+##### Immigrant ####
+IG <- combined_age %>%
+  filter(SDCFIMM== "1") %>% #immigrant status - immigrant
+  filter(SDCGRES ==1 |SDCGRES ==2)
+
+RecentIG <- IG %>%
+  filter(SDCGRES==1)
+
+ResettledIG <- IG %>%
+  filter(SDCGRES==2)
+
+## weighted pop IG (TOTAL)
+WpopIG <- sum(IG$WTS_M)
+
+##Pop number by Year (weighted) - IG
+IG_WPop2001 <- IG %>%
+  filter(Year == "2001") %>%
+  summarise(sum(WTS_M))
+
+IG_WPop2003 <- IG %>%
+  filter(Year == "2003") %>%
+  summarise(sum(WTS_M))
+
+IG_WPop2005 <- IG %>%
+  filter(Year == "2005") %>%
+  summarise(sum(WTS_M))
+
+IG_WPop2007_2008 <- IG %>%
+  filter(Year == "2007") %>%
+  summarise(sum(WTS_M))
+
+IG_WPop2009_2010 <- IG %>%
+  filter(Year == "2009") %>%
+  summarise(sum(WTS_M))
+
+IG_WPop2011_2012 <- IG %>%
+  filter(Year == "2011") %>%
+  summarise(sum(WTS_M))
+
+IG_WPop2013_2014 <- IG %>%
+  filter(Year == "2013") %>%
+  summarise(sum(WTS_M)) 
+
+IG_WPop <- as.integer(c(IG_WPop2001,IG_WPop2003,IG_WPop2005,IG_WPop2007_2008,IG_WPop2009_2010,IG_WPop2011_2012,IG_WPop2013_2014))
+
+##Pop number by Year (weighted) - RECENT IG
+RecentIG_WPop2001 <- RecentIG %>%
+  filter(Year == "2001") %>%
+  summarise(sum(WTS_M))
+
+RecentIG_WPop2003 <- RecentIG %>%
+  filter(Year == "2003") %>%
+  summarise(sum(WTS_M))
+
+RecentIG_WPop2005 <- RecentIG %>%
+  filter(Year == "2005") %>%
+  summarise(sum(WTS_M))
+
+RecentIG_WPop2007_2008 <- RecentIG %>%
+  filter(Year == "2007") %>%
+  summarise(sum(WTS_M))
+
+RecentIG_WPop2009_2010 <- RecentIG %>%
+  filter(Year == "2009") %>%
+  summarise(sum(WTS_M))
+
+RecentIG_WPop2011_2012 <- RecentIG %>%
+  filter(Year == "2011") %>%
+  summarise(sum(WTS_M))
+
+RecentIG_WPop2013_2014 <- RecentIG %>%
+  filter(Year == "2013") %>%
+  summarise(sum(WTS_M)) 
+
+RecentIG_WPop <- as.integer(c(RecentIG_WPop2001,RecentIG_WPop2003,RecentIG_WPop2005,RecentIG_WPop2007_2008,RecentIG_WPop2009_2010,RecentIG_WPop2011_2012,RecentIG_WPop2013_2014))
+
+
+##Pop number by Year (weighted) - RESETTLED IG
+ResettledIG_WPop2001 <- ResettledIG %>%
+  filter(Year == "2001") %>%
+  summarise(sum(WTS_M))
+
+ResettledIG_WPop2003 <- ResettledIG %>%
+  filter(Year == "2003") %>%
+  summarise(sum(WTS_M))
+
+ResettledIG_WPop2005 <- ResettledIG %>%
+  filter(Year == "2005") %>%
+  summarise(sum(WTS_M))
+
+ResettledIG_WPop2007_2008 <- ResettledIG %>%
+  filter(Year == "2007") %>%
+  summarise(sum(WTS_M))
+
+ResettledIG_WPop2009_2010 <- ResettledIG %>%
+  filter(Year == "2009") %>%
+  summarise(sum(WTS_M))
+
+ResettledIG_WPop2011_2012 <- ResettledIG %>%
+  filter(Year == "2011") %>%
+  summarise(sum(WTS_M))
+
+ResettledIG_WPop2013_2014 <- ResettledIG %>%
+  filter(Year == "2013") %>%
+  summarise(sum(WTS_M)) 
+
+ResettledIG_WPop <- as.integer(c(ResettledIG_WPop2001,ResettledIG_WPop2003,ResettledIG_WPop2005,ResettledIG_WPop2007_2008,ResettledIG_WPop2009_2010,ResettledIG_WPop2011_2012,ResettledIG_WPop2013_2014))
