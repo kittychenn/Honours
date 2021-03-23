@@ -14,7 +14,7 @@ StressIG <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(pct_time_der) %>%
   summarise_all(sum)%>%
-  mutate(High_Stress_Prevalence=Weight/sum(combined_age$WTS_M)*100)
+  mutate(Prevalence=Weight/WpopIG*100)
 
 
 ### METS (=<1.5 for inactive) ###
@@ -29,7 +29,7 @@ METSIG <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(pct_time_der) %>%
   summarise_all(sum)%>%
-  mutate(Inactivity_Prevalence=Weight/sum(combined_age$WTS_M)*100)
+  mutate(Prevalence=Weight/WpopIG*100)
 
 ### Binge drinking (1) ###
 
@@ -44,7 +44,7 @@ BDrinkerIG <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(pct_time_der) %>%
   summarise_all(sum)%>%
-  mutate(Binge_Drinking_Prevalence=Weight/sum(combined_age$WTS_M)*100)
+  mutate(Prevalence=Weight/WpopIG*100)
 
 ###Heavy smoker (>=1 pack_year AND SMKDSTY==1 (current))###
 
@@ -57,7 +57,7 @@ SmokerIG <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(pct_time_der) %>%
   summarise_all(sum)%>%
-  mutate(Smoking_Prevalence=Weight/sum(combined_age$WTS_M)*100)
+  mutate(Prevalence=Weight/WpopIG*100)
 
 ### Poor diet (Perez diet score<2) ###
 
@@ -72,31 +72,39 @@ DietIG <- IG %>%
   replace(is.na(.), 0) %>%
   group_by(pct_time_der) %>%
   summarise_all(sum)%>%
-  mutate(Poor_Diet_Prevalence=Weight/sum(combined_age$WTS_M)*100)
+  mutate(Prevalence=Weight/WpopIG*100)
 
 #### Graph ####
 require(ggplot2)
 
 # All behaviours 
+Behaviour1 <- StressIG %>%
+  select(pct_time_der,Prevalence)%>%
+  mutate(Behaviour="High stress")
+Behaviour2 <- SmokerIG %>%
+  select(pct_time_der,Prevalence)%>%
+  mutate(Behaviour="Heavy smoking")
+Behaviour3 <- METSIG %>%
+  select(pct_time_der,Prevalence)%>%
+  mutate(Behaviour="Inactivity")
+Behaviour4 <- DietIG %>%
+  select(pct_time_der,Prevalence)%>%
+  mutate(Behaviour="Poor diet")
+Behaviour5 <- BDrinkerIG %>%
+  select(pct_time_der,Prevalence)%>%
+  mutate(Behaviour="Binge drinking")
 
-ggplot()+
-  geom_point(data=BDrinkerIG, aes(x=pct_time_der,y=Binge_Drinking_Prevalence, color= "Binge drinker"))+
-  geom_point(data=SmokerIG, aes(x=pct_time_der,y=Smoking_Prevalence, color="Heavy smoker"))+
-  geom_point(data=METSIG ,aes(x=pct_time_der,y=Inactivity_Prevalence,color='Inactivity'))+
-  geom_point(data=StressIG ,aes(x=pct_time_der,y=High_Stress_Prevalence,color='High stress'))+
-  geom_point(data=DietIG, aes(x=pct_time_der, y=Poor_Diet_Prevalence, color="Poor diet"))+
+tBehaviour=bind_rows(Behaviour1,Behaviour2,Behaviour3,Behaviour4,Behaviour5)
+
+ggplot(data=tBehaviour,aes(x=pct_time_der,y=Prevalence,color=Behaviour))+
+  geom_line()+
+  geom_point()+
+  geom_smooth(method="lm",se=FALSE,linetype="dashed")+
   ylab("Prevalence (%)") +
-  xlab("Time in Canada (%)")+
-  labs(colour="Risk health behaviours")
-
-ggplot(data=PCT_by_prevalence)+
-  geom_point(aes(x=pct_time_der,y=Binge_Drinking_Prevalence, color= "Binge drinker"))+
-  geom_point(aes(x=pct_time_der,y=Smoking_Prevalence, color="Heavy smoker"))+
-  geom_point(aes(x=pct_time_der,y=Inactivity_Prevalence,color='Inactivity'))+
-  geom_point(aes(x=pct_time_der,y=High_Stress_Prevalence,color='High stress'))+
-  geom_point(aes(x=pct_time_der,y=Poor_Diet_Prevalence, color="Poor diet"))+
-  geom_smooth(method='lm',se=FALSE,fullrange=TRUE)
-
+  xlab("Time in Canada (%)")+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+ 
+  theme(legend.position="bottom")
 
 #### Regression ####
 #Stress
