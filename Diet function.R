@@ -43,5 +43,5 @@ diet_score_fun <-
     return(diet_score)
   }
 
-attach(combined)
-combined$Diet_Score <- diet_score_fun(FVCDFRU, FVCDSAL, FVCDPOT, FVCDCAR, FVCDVEG, FVCDJUI, DHH_SEX)
+attach(combined_age)
+combined_age$Diet_Score <- diet_score_fun(FVCDFRU, FVCDSAL, FVCDPOT, FVCDCAR, FVCDVEG, FVCDJUI, DHH_SEX)

@@ -221,7 +221,7 @@ labeled_REC_combined <- set_data_labels(REC_combined,variable_details,variables)
 get_label(labeled_REC_combined)
 
 #### COMBINED ####
-combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_FV_combined,labeled_REC_combined)
+combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_FV_combined,labeled_REC_combined, labeled_pct_time_combined)
 get_label(combined)
 labeled_combined <- set_data_labels(combined,variable_details,variables)
 get_label(labeled_combined)
@@ -233,75 +233,79 @@ labeled_Smoker_combined[,c('date_year','year')] <- NULL
 labeled_Stress_combined[,c('date_year','year')] <- NULL
 labeled_FV_combined[,c('date_year','year')] <- NULL
 
-combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_FV_combined, labeled_REC_combined)
+combined <-cbind(labeled_Time_in_Canada_combined,labeled_Bdrinker_combined, labeled_METS_combined, labeled_Smoker_combined, labeled_Stress_combined, labeled_IS_combined, labeled_FV_combined, labeled_REC_combined, labeled_pct_time_combined)
+
+#### Population greater than 20 ####
+combined_age <- subset(combined,DHHGAGE_cont >=20)
 
 # refer to PBL modification when uploading csv to PBL calculator
 # refer to Diet function.R and Smoking function.R to include diet score and pack-year cols
 
 #### Prevalence (not necessary) ####
 combined <- combined %>%
-  mutate(Prevalence=as.numeric(ifelse(year==2001,WTS_M/25787334,
-                                      ifelse(year==2003, WTS_M/26555430,
-                                             ifelse(year==2005, WTS_M/27126165,
-                                                    ifelse(year==2007, WTS_M/28017372,
-                                                           ifelse(year==2009,WTS_M/28725105,
-                                                                  ifelse(year==2011,WTS_M/29335211,
-                                                                         ifelse(year==2013,WTS_M/30002838,"missing")))))))))
+  mutate(Prevalence=as.numeric(ifelse(Year==2001,WTS_M/25787334,
+                                      ifelse(Year==2003, WTS_M/26555430,
+                                             ifelse(Year==2005, WTS_M/27126165,
+                                                    ifelse(Year==2007, WTS_M/28017372,
+                                                           ifelse(Year==2009,WTS_M/28725105,
+                                                                  ifelse(Year==2011,WTS_M/29335211,
+                                                                         ifelse(Year==2013,WTS_M/30002838,"missing")))))))))
 
 #### Population ####
 
 ##Pop number by Year (unweighted)
-pop2001 <- sum(combined$Year== "2001")
-pop2003 <- sum(combined$Year== "2003")
-pop2005 <- sum(combined$Year== "2005")
-pop2007_2008 <- sum(combined$Year== "2007")
-pop2009_2010 <- sum(combined$Year== "2009")
-pop2011_2012 <- sum(combined$Year== "2011")
-pop2013_2014 <- sum(combined$Year== "2013")
+pop2001 <- sum(combined_age$Year== "2001")
+pop2003 <- sum(combined_age$Year== "2003")
+pop2005 <- sum(combined_age$Year== "2005")
+pop2007_2008 <- sum(combined_age$Year== "2007")
+pop2009_2010 <- sum(combined_age$Year== "2009")
+pop2011_2012 <- sum(combined_age$Year== "2011")
+pop2013_2014 <- sum(combined_age$Year== "2013")
 
 pop <- c(pop2001,pop2003,pop2005,pop2007_2008,pop2009_2010,pop2011_2012,pop2013_2014)
 
 
 ##Pop number by Year (weighted)
-Wpop2001 <- combined %>%
+Wpop2001 <- combined_age %>%
   filter(Year == "2001") %>%
   summarise(sum(WTS_M))
 
-Wpop2003 <- combined %>%
+Wpop2003 <- combined_age %>%
   filter(Year == "2003") %>%
   summarise(sum(WTS_M))
 
-Wpop2005 <- combined %>%
+Wpop2005 <- combined_age %>%
   filter(Year == "2005") %>%
   summarise(sum(WTS_M))
 
-Wpop2007_2008 <- combined %>%
+Wpop2007_2008 <- combined_age %>%
   filter(Year == "2007") %>%
   summarise(sum(WTS_M))
 
-Wpop2009_2010 <- combined %>%
+Wpop2009_2010 <- combined_age %>%
   filter(Year == "2009") %>%
   summarise(sum(WTS_M))
 
-Wpop2011_2012 <- combined %>%
+Wpop2011_2012 <- combined_age %>%
   filter(Year == "2011") %>%
   summarise(sum(WTS_M))
 
 sum(is.na(REC2013_2014$WTS_M)) # 3 NA in the 2013 weights when using flow but no NA is cchs2013_2014 #
 
-combined$WTS_M[is.na(combined$WTS_M)] <- 99999
-combined <- combined %>%
+combined_age$WTS_M[is.na(combined_age$WTS_M)] <- 99999
+combined_age <- combined_age %>%
   mutate(WTS_M=replace(WTS_M,WTS_M == 99999 & HWTGBMI == 25.14, 1.07))%>%
   mutate(WTS_M=replace(WTS_M,WTS_M == 99999 & HWTGBMI == 23.83, 1.07)) %>%
   mutate(WTS_M=replace(WTS_M, WTS_M== 99999 & HWTGBMI == 26.91, 22.2))
 
-Wpop2013_2014 <- combined %>%
+Wpop2013_2014 <- combined_age %>%
   filter(Year == "2013") %>%
   summarise(sum(WTS_M)) 
 
 Wpop <- as.integer(c(Wpop2001,Wpop2003,Wpop2005,Wpop2007_2008,Wpop2009_2010,Wpop2011_2012,Wpop2013_2014))
 
+
 #### CDN Born
-CDN <- subset(combined,SDCFIMM== "2") #immigrant status - non
+CDN <- subset(combined_age,SDCFIMM== "2") #immigrant status - non
 #### Immigrant
-IG <- subset(combined,SDCFIMM== "1") #immigrant status - immigrant
+IG <- subset(combined_age,SDCFIMM== "1") #immigrant status - immigrant

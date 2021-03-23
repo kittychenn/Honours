@@ -67,8 +67,8 @@ pack_years_fun <-
     )
   }
 
-attach(combined)
-combined$Smoke_Status <-pack_years_fun(SMKDSTY, DHHGAGE_cont, SMK_09A_cont, SMKG09C, SMKG203_cont,
+attach(combined_age)
+combined_age$Smoke_Status <-pack_years_fun(SMKDSTY, DHHGAGE_cont, SMK_09A_cont, SMKG09C, SMKG203_cont,
                                SMKG207_cont, SMK_204, SMK_05B,
                                SMK_208, SMK_05C, SMKG01C_cont, SMK_01A)
 
