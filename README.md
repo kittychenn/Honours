@@ -1,1 +1,1 @@
-Refer to R file branches for main files
+Refer to R file branch for main files
