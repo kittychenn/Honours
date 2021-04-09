@@ -220,6 +220,9 @@ require(ggplot2)
 
 #Binge drinker by resettlement
 plot_BDrinker<- ggplot()+
+  geom_point(data=BDrinkerCDN, aes(x=Year,y=Binge_Drinking_Prevalence,color="Canadian"))+
+  geom_point(data=group_BDrinkerIG1 ,aes(x=Year,y=Binge_Drinking_Prevalence,color="Recent immigrant"))+
+  geom_point(data=group_BDrinkerIG2 ,aes(x=Year,y=Binge_Drinking_Prevalence,color="Resettled immigrant"))+
   geom_line(data=BDrinkerCDN, aes(x=Year,y=Binge_Drinking_Prevalence,color="Canadian"))+
   geom_line(data=group_BDrinkerIG1 ,aes(x=Year,y=Binge_Drinking_Prevalence,color="Recent immigrant"))+
   geom_line(data=group_BDrinkerIG2 ,aes(x=Year,y=Binge_Drinking_Prevalence,color="Resettled immigrant"))+
@@ -227,64 +230,121 @@ plot_BDrinker<- ggplot()+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
   ggtitle("Binge drinking")+
-  theme(plot.title = element_text(hjust = 0.5))+ 
-  theme(legend.position = "none")+ 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none", panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA))+
+  scale_y_continuous(limit=c(0,62))+
+  scale_x_discrete(limits=c(2001,2005,2009,2013))
+plot_BDrinker
 
 #Smoker by resettlement
 plot_Smoker <- ggplot()+
+  geom_point(data=group_SmokerIG1 ,aes(x=Year,y=Smoking_Prevalence,color="Recent immigrant"))+
+  geom_point(data=group_SmokerIG2 ,aes(x=Year,y=Smoking_Prevalence,color="Resettled immigrant")) +
+  geom_point(data=SmokerCDN ,aes(x=Year,y=Smoking_Prevalence,color="Canadian"))+
   geom_line(data=group_SmokerIG1 ,aes(x=Year,y=Smoking_Prevalence,color="Recent immigrant"))+
   geom_line(data=group_SmokerIG2 ,aes(x=Year,y=Smoking_Prevalence,color="Resettled immigrant")) +
   geom_line(data=SmokerCDN ,aes(x=Year,y=Smoking_Prevalence,color="Canadian"))+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
   ggtitle("Heavy smoking")+
-  theme(plot.title = element_text(hjust = 0.5))+ 
-  theme(legend.position = "none")+ 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none", panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA))+
+  scale_fill_manual(values=cbPalette)+
+  scale_y_continuous(limit=c(0,62))+
+  scale_x_discrete(limits=c(2001,2005,2009,2013))
 
 #METS by resettlement
 plot_METS <-ggplot()+
+  geom_point(data=group_METSIG1 ,aes(x=Year,y=Inactivity_Prevalence,color="Recent immigrant"))+
+  geom_point(data=group_METSIG2 ,aes(x=Year,y=Inactivity_Prevalence,color="Resettled immigrant")) +
+  geom_point(data=METSCDN ,aes(x=Year,y=Inactivity_Prevalence,color="Canadian"))+
   geom_line(data=group_METSIG1 ,aes(x=Year,y=Inactivity_Prevalence,color="Recent immigrant"))+
   geom_line(data=group_METSIG2 ,aes(x=Year,y=Inactivity_Prevalence,color="Resettled immigrant")) +
   geom_line(data=METSCDN ,aes(x=Year,y=Inactivity_Prevalence,color="Canadian"))+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
   ggtitle("Inactivity")+
-  theme(plot.title = element_text(hjust = 0.5))+ 
-  theme(legend.position = "none")+ 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none", panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA))+
+  scale_fill_manual(values=cbPalette)+
+  scale_y_continuous(limit=c(0,63))+
+  scale_x_discrete(limits=c(2001,2005,2009,2013))
 
 #Stress by resettlement
 plot_Stress <- ggplot()+
+  geom_point(data=group_StressIG1 ,aes(x=Year,y=High_Stress_Prevalence,color="Recent immigrant"))+
+  geom_point(data=group_StressIG2 ,aes(x=Year,y=High_Stress_Prevalence,color="Resettled immigrant")) +
+  geom_point(data=StressCDN, aes(x=Year, y=High_Stress_Prevalence, color = "Canadian"))+
   geom_line(data=group_StressIG1 ,aes(x=Year,y=High_Stress_Prevalence,color="Recent immigrant"))+
   geom_line(data=group_StressIG2 ,aes(x=Year,y=High_Stress_Prevalence,color="Resettled immigrant")) +
   geom_line(data=StressCDN, aes(x=Year, y=High_Stress_Prevalence, color = "Canadian"))+
   ylab("Prevalence (%)") +
   labs(colour="Population Groups")+
   ggtitle("High stress")+
-  theme(plot.title = element_text(hjust = 0.5))+ 
-  theme(legend.position = "none")+ 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none", panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA))+
+  scale_fill_manual(values=cbPalette)+
+  scale_y_continuous(limit=c(0,62))+
+  scale_x_discrete(limits=c(2001,2005,2009,2013))
 #FV by resettlement 
 plot_FV <-ggplot()+
+  geom_point(data=group_DietIG1,aes(x=Year,y=Poor_Diet_Prevalence, color="Recent immigrant"))+
+  geom_point(data=group_DietIG2,aes(x=Year,y=Poor_Diet_Prevalence,color="Resettled immigrant"))+
+  geom_point(data=DietCDN, aes(x=Year, y=Poor_Diet_Prevalence, color="Canadian"))+
   geom_line(data=group_DietIG1,aes(x=Year,y=Poor_Diet_Prevalence, color="Recent immigrant"))+
   geom_line(data=group_DietIG2,aes(x=Year,y=Poor_Diet_Prevalence,color="Resettled immigrant"))+
   geom_line(data=DietCDN, aes(x=Year, y=Poor_Diet_Prevalence, color="Canadian"))+
   ylab("Prevalence (%)") +
   labs(colour="Population groups")+
   ggtitle("Poor diet")+
-  theme(plot.title = element_text(hjust = 0.5))+ 
-  theme(legend.position = "none")+ 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        panel.background = element_blank(), axis.line = element_line(colour = "black"))
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position = "none", panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"),
+        panel.border = element_rect(colour = "black", fill=NA))+
+  scale_x_discrete(limits=c(2001,2005,2009,2013))+
+  scale_fill_manual(values=cbPalette)+
+  scale_y_continuous(limit=c(0,62))
 plot_FV+ 
   theme(legend.position="bottom")
 
 library(ggpubr)
-figure <- ggarrange(plot_BDrinker,plot_FV,plot_METS,plot_Smoker,plot_Stress)
-figure 
+figure2 <- ggarrange(plot_BDrinker,plot_FV,plot_METS,plot_Smoker,plot_Stress)
+figure2 
+
+summary(lm(High_Stress_Prevalence~Year, data=StressCDN))
+summary(lm(High_Stress_Prevalence~Year, data=group_StressIG1))
+summary(lm(High_Stress_Prevalence~Year, data=group_StressIG2))
+
+summary(lm(Poor_Diet_Prevalence~Year, data=DietCDN))
+summary(lm(Poor_Diet_Prevalence~Year, data=group_DietIG1))
+summary(lm(Poor_Diet_Prevalence~Year, data=group_DietIG2))
+
+summary(lm(Inactivity_Prevalence~Year, data=METSCDN))
+summary(lm(Inactivity_Prevalence~Year, data=group_METSIG1))
+summary(lm(Inactivity_Prevalence~Year, data=group_METSIG2))
+
+summary(lm(Smoking_Prevalence~Year, data=SmokerCDN))
+summary(lm(Smoking_Prevalence~Year, data=group_SmokerIG1))
+summary(lm(Smoking_Prevalence~Year, data=group_SmokerIG2))
+
+summary(lm(Binge_Drinking_Prevalence~Year, data=BDrinkerCDN))
+summary(lm(Binge_Drinking_Prevalence~Year, data=group_BDrinkerIG1))
+summary(lm(Binge_Drinking_Prevalence~Year, data=group_BDrinkerIG2))
